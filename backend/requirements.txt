@@ -1,0 +1,12 @@
+pandas
+numpy
+scikit-learn
+openpyxl
+dotenv
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-jose
+python-multipart
+openai
