@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Educativa</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-graduation-cap"></i> Sistema de Gestión Educativa</h1>
+            <p>Panel de administración para pruebas de API</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="showTab('alumnos')">
+                <i class="fas fa-users"></i> Alumnos
+            </button>
+            <button class="tab-btn" onclick="showTab('cursos')">
+                <i class="fas fa-book"></i> Cursos
+            </button>
+            <button class="tab-btn" onclick="showTab('competencias')">
+                <i class="fas fa-trophy"></i> Competencias
+            </button>
+            <button class="tab-btn" onclick="showTab('inteligencias')">
+                <i class="fas fa-brain"></i> Inteligencias
+            </button>
+            <button class="tab-btn" onclick="showTab('ci')">
+                <i class="fas fa-chart-line"></i> CI
+            </button>
+            <button class="tab-btn" onclick="showTab('clustering')">
+                <i class="fas fa-sitemap"></i> Clustering
+            </button>
+            <button class="tab-btn" onclick="showTab('profesores')">
+                <i class="fas fa-chalkboard-teacher"></i> Profesores
+            </button>
+            <button class="tab-btn" onclick="showTab('ai-assistant')">
+                <i class="fas fa-robot"></i> Yae Miko
+            </button>
+            <button class="tab-btn" onclick="showTab('upload')">
+                <i class="fas fa-upload"></i> Subir Excel
+            </button>
+        </nav>
+
+        <!-- Tab Alumnos -->
+        <div id="alumnos" class="tab-content active">
+            <div class="section">
+                <h2>Gestión de Alumnos</h2>
+                
+                <!-- Formulario para crear alumno -->
+                <div class="form-section">
+                    <h3>Crear Nuevo Alumno</h3>
+                    <form id="alumnoForm" class="form">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" id="apellido" name="apellido" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="edad">Edad:</label>
+                            <input type="number" id="edad" name="edad" min="1" max="100">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Crear Alumno
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de alumnos -->
+                <div class="list-section">
+                    <h3>Lista de Alumnos</h3>
+                    <button onclick="loadAlumnos()" class="btn btn-secondary">
+                        <i class="fas fa-refresh"></i> Actualizar Lista
+                    </button>
+                    <div id="alumnosList" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Cursos -->
+        <div id="cursos" class="tab-content">
+            <div class="section">
+                <h2>Gestión de Cursos</h2>
+                
+                <!-- Formulario para crear curso -->
+                <div class="form-section">
+                    <h3>Crear Nuevo Curso</h3>
+                    <form id="cursoForm" class="form">
+                        <div class="form-group">
+                            <label for="cursoNombre">Nombre del Curso:</label>
+                            <input type="text" id="cursoNombre" name="nombre" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Crear Curso
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de cursos -->
+                <div class="list-section">
+                    <h3>Lista de Cursos</h3>
+                    <button onclick="loadCursos()" class="btn btn-secondary">
+                        <i class="fas fa-refresh"></i> Actualizar Lista
+                    </button>
+                    <div id="cursosList" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Competencias -->
+        <div id="competencias" class="tab-content">
+            <div class="section">
+                <h2>Gestión de Competencias</h2>
+                
+                <!-- Formulario para crear competencia -->
+                <div class="form-section">
+                    <h3>Crear Nueva Competencia</h3>
+                    <form id="competenciaForm" class="form">
+                        <div class="form-group">
+                            <label for="compNombre">Nombre de la Competencia:</label>
+                            <input type="text" id="compNombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="compDescripcion">Descripción:</label>
+                            <textarea id="compDescripcion" name="descripcion" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Crear Competencia
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de competencias -->
+                <div class="list-section">
+                    <h3>Lista de Competencias</h3>
+                    <button onclick="loadCompetencias()" class="btn btn-secondary">
+                        <i class="fas fa-refresh"></i> Actualizar Lista
+                    </button>
+                    <div id="competenciasList" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Inteligencias -->
+        <div id="inteligencias" class="tab-content">
+            <div class="section">
+                <h2>Gestión de Inteligencias</h2>
+                
+                <!-- Formulario para crear inteligencia -->
+                <div class="form-section">
+                    <h3>Crear Nueva Inteligencia</h3>
+                    <form id="inteligenciaForm" class="form">
+                        <div class="form-group">
+                            <label for="intelAlumno">Alumno:</label>
+                            <select id="intelAlumno" name="alumno_id" required>
+                                <option value="">Seleccionar alumno...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intelTipo">Tipo de Inteligencia:</label>
+                            <select id="intelTipo" name="tipo_inteligencia" required>
+                                <option value="">Seleccionar tipo...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intelPuntaje">Puntaje:</label>
+                            <input type="number" id="intelPuntaje" name="puntaje" step="0.1" min="0" max="100" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Crear Inteligencia
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de inteligencias -->
+                <div class="list-section">
+                    <h3>Lista de Inteligencias</h3>
+                    <div class="filter-section">
+                        <button onclick="loadInteligencias()" class="btn btn-secondary">
+                            <i class="fas fa-refresh"></i> Actualizar Lista
+                        </button>
+                        <button onclick="loadResumenInteligencias()" class="btn btn-info">
+                            <i class="fas fa-chart-bar"></i> Ver Tipos
+                        </button>
+                    </div>
+                    <div id="inteligenciasList" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab CI -->
+        <div id="ci" class="tab-content">
+            <div class="section">
+                <h2>Gestión de CI</h2>
+                
+                <!-- Formulario para crear CI -->
+                <div class="form-section">
+                    <h3>Crear/Actualizar CI</h3>
+                    <form id="ciForm" class="form">
+                        <div class="form-group">
+                            <label for="ciAlumno">Alumno:</label>
+                            <select id="ciAlumno" name="alumno_id" required>
+                                <option value="">Seleccionar alumno...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ciValor">Valor de CI:</label>
+                            <input type="number" id="ciValor" name="valor_ci" min="0" max="200" required>
+                            <small class="form-help">Valor del coeficiente intelectual (0-200)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="ciFecha">Fecha del Test:</label>
+                            <input type="date" id="ciFecha" name="fecha_test">
+                        </div>
+                        <div class="form-group">
+                            <label for="ciTipo">Tipo de Test:</label>
+                            <input type="text" id="ciTipo" name="tipo_test" placeholder="Ej: WISC, Stanford-Binet, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="ciObservaciones">Observaciones:</label>
+                            <textarea id="ciObservaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Guardar CI
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de CIs -->
+                <div class="list-section">
+                    <h3>Lista de CIs</h3>
+                    <div class="filter-section">
+                        <button onclick="loadCIs()" class="btn btn-secondary">
+                            <i class="fas fa-refresh"></i> Actualizar Lista
+                        </button>
+                        <button onclick="loadEstadisticasCI()" class="btn btn-info">
+                            <i class="fas fa-chart-bar"></i> Ver Estadísticas
+                        </button>
+                    </div>
+                    <div id="cisList" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Clustering -->
+        <div id="clustering" class="tab-content">
+            <div class="section">
+                <h2><i class="fas fa-sitemap"></i> Análisis de Clustering</h2>
+                
+                <!-- Procesamiento de Clustering -->
+                <div class="form-section">
+                    <h3>Procesar Clustering</h3>
+                    <div class="clustering-info">
+                        <p><i class="fas fa-info-circle"></i> El clustering analiza los datos de CI, inteligencias múltiples y calificaciones para agrupar alumnos con características similares.</p>
+                        <p><strong>Algoritmos utilizados:</strong></p>
+                        <ul>
+                            <li><strong>K-Means:</strong> Agrupa alumnos en clusters basados en similitud de características</li>
+                            <li><strong>DBSCAN:</strong> Identifica clusters basados en densidad de datos</li>
+                        </ul>
+                    </div>
+                    <button onclick="processClustering()" class="btn btn-primary" id="processClusteringBtn">
+                        <i class="fas fa-cogs"></i> Procesar Clustering
+                    </button>
+                    <div id="clusteringStatus" class="status-message"></div>
+                </div>
+
+                <!-- Estadísticas de Clusters -->
+                <div class="list-section">
+                    <h3>Estadísticas de Clusters</h3>
+                    <div class="filter-section">
+                        <button onclick="loadClusterStatistics()" class="btn btn-secondary">
+                            <i class="fas fa-chart-bar"></i> Cargar Estadísticas
+                        </button>
+                        <button onclick="loadClusteringAnalysis()" class="btn btn-info">
+                            <i class="fas fa-analytics"></i> Análisis Completo
+                        </button>
+                    </div>
+                    <div id="clusterStatistics" class="list-container"></div>
+                </div>
+
+                <!-- Lista de Alumnos con Clusters -->
+                <div class="list-section">
+                    <h3>Alumnos con Clusters</h3>
+                    <button onclick="loadAlumnosWithClusters()" class="btn btn-secondary">
+                        <i class="fas fa-users"></i> Cargar Alumnos
+                    </button>
+                    <div id="alumnosWithClusters" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Profesores -->
+        <div id="profesores" class="tab-content">
+            <div class="section">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Gestión de Profesores</h2>
+                
+                <!-- Estado de Autenticación -->
+                <div id="authStatus" class="auth-status">
+                    <div id="notAuthenticated" class="auth-not-authenticated">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No has iniciado sesión</p>
+                    </div>
+                    <div id="authenticated" class="auth-authenticated" style="display: none;">
+                        <i class="fas fa-user-check"></i>
+                        <p>Has iniciado sesión como: <span id="currentUser"></span></p>
+                        <button onclick="logout()" class="btn btn-warning">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Formulario de Registro -->
+                <div class="form-section">
+                    <h3>Registrar Nuevo Profesor</h3>
+                    <form id="profesorRegisterForm" class="form">
+                        <div class="form-group">
+                            <label for="profesorNombre">Nombre Completo:</label>
+                            <input type="text" id="profesorNombre" name="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profesorDNI">DNI:</label>
+                            <input type="text" id="profesorDNI" name="DNI" required>
+                            <small class="form-help">El DNI será tu identificador único. También podrás usar tu nombre para iniciar sesión.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="profesorContrasena">Contraseña:</label>
+                            <input type="password" id="profesorContrasena" name="Contrasena" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profesorContrasenaConfirm">Confirmar Contraseña:</label>
+                            <input type="password" id="profesorContrasenaConfirm" name="ContrasenaConfirm" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Registrar Profesor
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Formulario de Inicio de Sesión -->
+                <div class="form-section">
+                    <h3>Iniciar Sesión</h3>
+                    <form id="profesorLoginForm" class="form">
+                        <div class="form-group">
+                            <label for="loginDNI">DNI o Nombre:</label>
+                            <input type="text" id="loginDNI" name="username" placeholder="Ingresa tu DNI o nombre completo" required>
+                            <small class="form-help">Puedes usar tu DNI o tu nombre completo para iniciar sesión</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginContrasena">Contraseña:</label>
+                            <input type="password" id="loginContrasena" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Información del Token -->
+                <div id="tokenInfo" class="token-info" style="display: none;">
+                    <h3>Información del Token</h3>
+                    <div class="token-details">
+                        <p><strong>Token:</strong> <span id="tokenValue"></span></p>
+                        <p><strong>Tipo:</strong> <span id="tokenType"></span></p>
+                        <button onclick="copyToken()" class="btn btn-info">
+                            <i class="fas fa-copy"></i> Copiar Token
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gestión de Profesores -->
+                <div class="form-section">
+                    <h3>Gestión de Profesores</h3>
+                    <div class="filter-section">
+                        <button onclick="loadProfesores()" class="btn btn-secondary">
+                            <i class="fas fa-users"></i> Cargar Profesores
+                        </button>
+                        <button onclick="loadCursosDisponibles()" class="btn btn-info">
+                            <i class="fas fa-book"></i> Ver Cursos Disponibles
+                        </button>
+                    </div>
+                    <div id="profesoresList" class="list-container"></div>
+                </div>
+
+                <!-- Gestión de Cursos por Profesor -->
+                <div class="form-section">
+                    <h3>Asignación de Cursos</h3>
+                    <div class="form">
+                        <div class="form-group">
+                            <label for="asignarProfesor">Profesor:</label>
+                            <select id="asignarProfesor" name="profesor_id" required>
+                                <option value="">Seleccionar profesor...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="asignarCurso">Curso:</label>
+                            <select id="asignarCurso" name="curso_id" required>
+                                <option value="">Seleccionar curso...</option>
+                            </select>
+                        </div>
+                        <button onclick="asignarCursoProfesor()" class="btn btn-primary">
+                            <i class="fas fa-link"></i> Asignar Curso
+                        </button>
+                        <button onclick="desasignarCursoProfesor()" class="btn btn-warning">
+                            <i class="fas fa-unlink"></i> Desasignar Curso
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cursos del Profesor Seleccionado -->
+                <div class="list-section">
+                    <h3>Cursos del Profesor</h3>
+                    <div class="form">
+                        <div class="form-group">
+                            <label for="verCursosProfesor">Seleccionar Profesor:</label>
+                            <select id="verCursosProfesor" name="profesor_id" onchange="loadCursosProfesor()">
+                                <option value="">Seleccionar profesor...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="cursosProfesor" class="list-container"></div>
+                </div>
+
+                <!-- Estadísticas del Profesor -->
+                <div class="list-section">
+                    <h3>Estadísticas del Profesor</h3>
+                    <div class="form">
+                        <div class="form-group">
+                            <label for="estadisticasProfesor">Seleccionar Profesor:</label>
+                            <select id="estadisticasProfesor" name="profesor_id" onchange="loadEstadisticasProfesor()">
+                                <option value="">Seleccionar profesor...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="estadisticasProfesor" class="list-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab AI Assistant -->
+        <div id="ai-assistant" class="tab-content">
+            <div class="section">
+                <h2><i class="fas fa-robot"></i> Yae Miko - Tu Asistente Pedagógica Personal</h2>
+                
+                <!-- Selección de Alumno -->
+                <div class="form-section">
+                    <h3>Seleccionar Alumno</h3>
+                    <div class="form">
+                        <div class="form-group">
+                            <label for="aiStudentSelect">Alumno:</label>
+                            <select id="aiStudentSelect" name="alumno_id" required>
+                                <option value="">Seleccionar alumno...</option>
+                            </select>
+                        </div>
+                        <button onclick="loadStudentProfile()" class="btn btn-primary">
+                            <i class="fas fa-user"></i> Cargar Perfil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Perfil del Alumno -->
+                <div id="studentProfileSection" class="list-section" style="display: none;">
+                    <h3>Perfil del Alumno</h3>
+                    <div id="studentProfile" class="profile-container"></div>
+                </div>
+
+                <!-- Generar Recomendaciones IA -->
+                <div id="aiRecommendationsSection" class="list-section" style="display: none;">
+                    <h3>Recomendaciones Pedagógicas de Yae Miko</h3>
+                    <div class="auto-generation-notice">
+                        <i class="fas fa-bolt"></i>
+                        <span><strong>⚡ Generación Automática:</strong> Las recomendaciones se generan automáticamente al seleccionar un alumno</span>
+                    </div>
+                    <button onclick="generateAIRecommendations()" class="btn btn-secondary" id="regenerateButton">
+                        <i class="fas fa-redo"></i> Regenerar Recomendaciones
+                    </button>
+                    <div id="aiRecommendations" class="ai-response-container"></div>
+                </div>
+
+                <!-- Chat con IA -->
+                <div id="aiChatSection" class="list-section" style="display: none;">
+                    <h3>Chat Personal con Yae Miko</h3>
+                    
+                    <!-- Selección de Alumno para Chat -->
+                    <div class="chat-student-selector">
+                        <div class="form-group">
+                            <label for="chatStudentSelect">Seleccionar Alumno para Chat Personal:</label>
+                            <select id="chatStudentSelect" name="chat_alumno_id" required>
+                                <option value="">Seleccionar alumno...</option>
+                            </select>
+                        </div>
+                        <button onclick="initializePersonalChat()" class="btn btn-primary">
+                            <i class="fas fa-comments"></i> Iniciar Chat Personal
+                        </button>
+                    </div>
+                    
+                    <div class="chat-controls">
+                        <button onclick="loadPersonalChatHistory()" class="btn btn-info">
+                            <i class="fas fa-history"></i> Ver Historial Personal
+                        </button>
+                        <button onclick="startNewChat()" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Nuevo Chat
+                        </button>
+                        <button onclick="clearPersonalChatHistory()" class="btn btn-warning">
+                            <i class="fas fa-trash"></i> Limpiar Chat Personal
+                        </button>
+                    </div>
+                    
+                    <div id="chatContainer" class="chat-container" style="display: none;">
+                        <div id="chatHeader" class="chat-header">
+                            <i class="fas fa-user-graduate"></i>
+                            <span id="chatStudentName">Chat Personal</span>
+                        </div>
+                        
+                        <div id="chatMessages" class="chat-messages">
+                            <div class="chat-welcome">
+                                <i class="fas fa-robot"></i>
+                                <p>¡Hola! Soy Yae Miko, tu asistente pedagógica personal.</p>
+                                <p>Selecciona un alumno para comenzar una conversación personalizada sobre su desarrollo educativo.</p>
+                                <p><strong>Características del chat personal:</strong></p>
+                                <ul>
+                                    <li>✅ Conversación exclusiva para cada alumno</li>
+                                    <li>✅ Memoria de conversaciones anteriores</li>
+                                    <li>✅ Contexto personalizado del alumno</li>
+                                    <li>✅ Recomendaciones específicas</li>
+                                    <li>✅ Aislamiento completo entre alumnos</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <form id="chatForm" class="chat-form">
+                                <input type="text" id="chatInput" placeholder="Escribe tu pregunta personal..." maxlength="500" required>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Upload -->
+        <div id="upload" class="tab-content">
+            <div class="section">
+                <h2>Subir Archivo Excel</h2>
+                
+                <div class="upload-section">
+                    <h3>Procesar Datos desde Excel</h3>
+                    <form id="uploadForm" class="form">
+                        <div class="form-group">
+                            <label for="excelFile">Seleccionar archivo Excel (.xlsx, .xls):</label>
+                            <input type="file" id="excelFile" name="file" accept=".xlsx,.xls" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="actualizarExistentes" name="actualizar_existentes" checked>
+                                <span class="checkmark"></span>
+                                Actualizar datos existentes
+                            </label>
+                            <small class="form-help">
+                                Si está marcado, actualizará los datos de alumnos que ya existen. 
+                                Si no está marcado, solo creará nuevos alumnos.
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Subir y Procesar
+                        </button>
+                    </form>
+                    <div id="uploadStatus" class="status-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Editar</h2>
+            <form id="editForm" class="form">
+                <div id="modalFields"></div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+openpyxl
+dotenv
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-jose
+python-multipart
+openai
+passlib[bcrypt]
+python-jose[cryptography]
+requests
