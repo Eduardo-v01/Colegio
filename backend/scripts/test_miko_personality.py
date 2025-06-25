@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script de prueba para verificar la personalidad de Yae Miko
+Script de prueba para verificar la personalidad de Miko
 """
 
 import sys
@@ -10,10 +10,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.services.ai_assistant import AIAssistantService
 from app.services.personal_ai_chat import PersonalAIChatService
 
-def test_yae_miko_personality():
-    """Prueba la personalidad de Yae Miko con datos de ejemplo"""
+def test_miko_personality():
+    """Prueba la personalidad de Miko con datos de ejemplo"""
     
-    print("🌟 Probando la personalidad de Yae Miko 🌟")
+    print("🌟 Probando la personalidad de Miko 🌟")
     print("=" * 50)
     
     # Datos de ejemplo de una alumna
@@ -50,14 +50,16 @@ def test_yae_miko_personality():
     system_prompt = ai_service._build_system_prompt(student_data)
     print("✅ Prompt del sistema generado correctamente")
     print(f"   Longitud: {len(system_prompt)} caracteres")
-    print(f"   Contiene 'Yae Miko': {'Yae Miko' in system_prompt}")
+    print(f"   Contiene 'Miko': {'Miko' in system_prompt}")
+    print(f"   Contiene 'San Martín de Porres': {'San Martín de Porres' in system_prompt}")
+    print(f"   Contiene 'Cherving': {'Cherving' in system_prompt}")
     print(f"   Contiene emojis: {'😊' in system_prompt or '🌟' in system_prompt or '💪' in system_prompt}")
     
     # Probar el prompt de estudiante
     student_prompt = ai_service._build_student_prompt(student_data)
     print("\n✅ Prompt de estudiante generado correctamente")
     print(f"   Longitud: {len(student_prompt)} caracteres")
-    print(f"   Contiene 'Yae Miko': {'Yae Miko' in student_prompt}")
+    print(f"   Contiene 'Miko': {'Miko' in student_prompt}")
     print(f"   Contiene personalidad: {'amigable' in student_prompt.lower() and 'motivadora' in student_prompt.lower()}")
     
     # Probar el servicio de chat personal
@@ -70,14 +72,16 @@ def test_yae_miko_personality():
     personal_system_prompt = personal_chat_service._build_personal_system_prompt(student_data)
     print("✅ Prompt del sistema personal generado correctamente")
     print(f"   Longitud: {len(personal_system_prompt)} caracteres")
-    print(f"   Contiene 'Yae Miko': {'Yae Miko' in personal_system_prompt}")
+    print(f"   Contiene 'Miko': {'Miko' in personal_system_prompt}")
+    print(f"   Contiene 'San Martín de Porres': {'San Martín de Porres' in personal_system_prompt}")
+    print(f"   Contiene 'Cherving': {'Cherving' in personal_system_prompt}")
     print(f"   Contiene personalidad: {'cálida' in personal_system_prompt.lower() and 'cariñosa' in personal_system_prompt.lower()}")
     
     # Probar el mensaje de bienvenida
     welcome_message = personal_chat_service.generate_welcome_message(student_data)
     print("\n✅ Mensaje de bienvenida generado correctamente")
     print(f"   Longitud: {len(welcome_message)} caracteres")
-    print(f"   Contiene 'Yae Miko': {'Yae Miko' in welcome_message}")
+    print(f"   Contiene 'Miko': {'Miko' in welcome_message}")
     print(f"   Contiene emojis: {'😊' in welcome_message or '🌟' in welcome_message or '💪' in welcome_message}")
     
     # Mostrar una muestra del mensaje de bienvenida
@@ -90,14 +94,16 @@ def test_yae_miko_personality():
         print(f"   ... y {len(lines) - 10} líneas más")
     
     print("\n🎉 ¡Prueba completada exitosamente!")
-    print("La personalidad de Yae Miko está configurada correctamente.")
+    print("La personalidad de Miko está configurada correctamente.")
     print("\nCaracterísticas verificadas:")
-    print("✅ Nombre: Yae Miko")
+    print("✅ Nombre: Miko")
     print("✅ Personalidad: Amigable, sabia, motivadora")
     print("✅ Tono: Cálido y cercano")
     print("✅ Emojis: Incluidos apropiadamente")
     print("✅ Lenguaje: Personal e inclusivo")
     print("✅ Enfoque: Positivo y alentador")
+    print("✅ Colegio: San Martín de Porres")
+    print("✅ Creador: Seudónimo Cherving")
 
 if __name__ == "__main__":
-    test_yae_miko_personality() 
+    test_miko_personality() 

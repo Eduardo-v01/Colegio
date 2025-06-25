@@ -86,7 +86,7 @@ def verificar_tabla_conversaciones():
                     profesor_id = result.fetchone()[0]
                     
                     # Insertar registro de prueba
-                    test_message = "Mensaje de prueba de Yae Miko"
+                    test_message = "Mensaje de prueba de Miko"
                     conn.execute(text("""
                         INSERT INTO ConversacionesIA 
                         (Alumno_ID, Profesor_ID, Mensaje, Es_Usuario, Fecha_Creacion, Contexto_Alumno)

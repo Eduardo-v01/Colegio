@@ -1332,8 +1332,8 @@ async function generateAIRecommendations() {
     container.innerHTML = `
         <div class="ai-loading">
             <i class="fas fa-robot fa-spin"></i>
-            <p><strong>🌟 Yae Miko Analizando Perfil</strong></p>
-            <p>Yae Miko está analizando el perfil de <strong>${currentStudentProfile.nombre}</strong>...</p>
+            <p><strong>🌟 Miko Analizando Perfil</strong></p>
+            <p>Miko está analizando el perfil de <strong>${currentStudentProfile.nombre}</strong>...</p>
             <p>Generando recomendaciones personalizadas automáticamente ⚡</p>
             <p>Esto puede tomar unos segundos.</p>
         </div>
@@ -1350,11 +1350,11 @@ async function generateAIRecommendations() {
         
         if (data.success) {
             displayAIRecommendations(data);
-            showStatus('✅ Recomendaciones de Yae Miko generadas automáticamente', 'success');
+            showStatus('✅ Recomendaciones de Miko generadas automáticamente', 'success');
         } else {
             container.innerHTML = `
                 <div class="ai-error">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Error en Yae Miko</h4>
+                    <h4><i class="fas fa-exclamation-triangle"></i> Error en Miko</h4>
                     <p>${data.error || 'No se pudieron generar recomendaciones'}</p>
                     <button class="btn btn-primary" onclick="generateAIRecommendations()">
                         <i class="fas fa-redo"></i> Reintentar
@@ -1386,7 +1386,7 @@ function displayAIRecommendations(data) {
         const summary = data.analysis_summary;
         summaryHTML = `
             <div class="ai-summary">
-                <h5><i class="fas fa-chart-bar"></i> Resumen del Análisis de Yae Miko</h5>
+                <h5><i class="fas fa-chart-bar"></i> Resumen del Análisis de Miko</h5>
                 <div class="ai-summary-grid">
                     ${summary.fortalezas && summary.fortalezas.length > 0 ? `
                         <div class="ai-summary-section">
@@ -1431,7 +1431,7 @@ function displayAIRecommendations(data) {
     container.innerHTML = `
         <div class="ai-response-header">
             <i class="fas fa-robot"></i>
-            <h4>Recomendaciones de Yae Miko para ${data.student_name}</h4>
+            <h4>Recomendaciones de Miko para ${data.student_name}</h4>
         </div>
         
         <div class="ai-response-content">
@@ -1516,7 +1516,7 @@ function addChatMessage(content, sender) {
     
     const avatar = document.createElement('div');
     avatar.className = `chat-avatar ${sender}`;
-    avatar.textContent = sender === 'user' ? 'Tú' : 'Yae Miko';
+    avatar.textContent = sender === 'user' ? 'Tú' : 'Miko';
     
     const bubble = document.createElement('div');
     bubble.className = `chat-bubble ${sender}`;
@@ -1562,7 +1562,7 @@ function showTypingIndicator() {
     typingDiv.id = 'typingIndicator';
     typingDiv.innerHTML = `
         <i class="fas fa-robot fa-spin"></i>
-        <span>Yae Miko está escribiendo...</span>
+        <span>Miko está escribiendo...</span>
     `;
     
     chatMessages.appendChild(typingDiv);
@@ -1620,7 +1620,7 @@ async function clearChatHistory() {
             document.getElementById('chatMessages').innerHTML = `
                 <div class="chat-welcome">
                     <i class="fas fa-robot"></i>
-                    <p>¡Hola! Soy Yae Miko, tu asistente pedagógica personal. Puedes hacerme preguntas específicas sobre el alumno seleccionado.</p>
+                    <p>¡Hola! Soy Miko, tu asistente pedagógica personal. Puedes hacerme preguntas específicas sobre el alumno seleccionado.</p>
                     <p><strong>Ejemplos de preguntas:</strong></p>
                     <ul>
                         <li>"¿Cómo puedo ayudarle con matemáticas?"</li>
@@ -1915,7 +1915,7 @@ async function handlePersonalChatSubmit(event) {
             if (data.success) {
                 addPersonalChatMessage(data.response, false);
             } else {
-                addPersonalChatError(data.error || 'Error en la respuesta de Yae Miko');
+                addPersonalChatError(data.error || 'Error en la respuesta de Miko');
             }
         } else {
             // Si hay autenticación, usar el endpoint privado
@@ -1955,7 +1955,7 @@ async function handlePersonalChatSubmit(event) {
             if (data.success) {
                 addPersonalChatMessage(data.response, false);
             } else {
-                addPersonalChatError(data.error || 'Error en la respuesta de Yae Miko');
+                addPersonalChatError(data.error || 'Error en la respuesta de Miko');
             }
         }
         
@@ -2010,7 +2010,7 @@ function showPersonalChatTyping() {
     typingDiv.className = 'chat-typing';
     typingDiv.innerHTML = `
         <i class="fas fa-robot"></i>
-        <span>Yae Miko está escribiendo...</span>
+        <span>Miko está escribiendo...</span>
     `;
     chatMessages.appendChild(typingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -2041,7 +2041,7 @@ async function loadPersonalChatHistory() {
         chatMessages.innerHTML = `
             <div class="chat-welcome">
                 <i class="fas fa-robot"></i>
-                <p>¡Hola! Soy Yae Miko, tu asistente pedagógica personal.</p>
+                <p>¡Hola! Soy Miko, tu asistente pedagógica personal.</p>
                 <p>Para ver el historial de conversaciones, necesitas <strong>iniciar sesión como profesor</strong>.</p>
                 <p>Mientras tanto, puedes:</p>
                 <ul>
@@ -2268,7 +2268,7 @@ async function startNewChat() {
     
     // Limpiar mensajes anteriores
     const chatMessages = document.getElementById('chatMessages');
-    chatMessages.innerHTML = '<div class="chat-loading"><i class="fas fa-spinner fa-spin"></i> Generando nuevas recomendaciones de Yae Miko...</div>';
+    chatMessages.innerHTML = '<div class="chat-loading"><i class="fas fa-spinner fa-spin"></i> Generando nuevas recomendaciones de Miko...</div>';
     
     try {
         // Obtener recomendaciones frescas sin historial
@@ -2285,12 +2285,12 @@ async function startNewChat() {
             chatMessages.innerHTML = '';
             
             // Agregar mensaje de bienvenida
-            addPersonalChatMessage(`¡Hola ${data.student_name}! 😊 Soy Yae Miko, tu asistente pedagógica personal.`, false);
+            addPersonalChatMessage(`¡Hola ${data.student_name}! 😊 Soy Miko, tu asistente pedagógica personal.`, false);
             
-            // Agregar las recomendaciones como un mensaje de Yae Miko
+            // Agregar las recomendaciones como un mensaje de Miko
             addPersonalChatMessage(data.recommendations, false);
             
-            showStatus('✅ Nuevo chat iniciado con recomendaciones frescas de Yae Miko', 'success');
+            showStatus('✅ Nuevo chat iniciado con recomendaciones frescas de Miko', 'success');
         } else {
             throw new Error(data.error || 'Error al generar recomendaciones');
         }

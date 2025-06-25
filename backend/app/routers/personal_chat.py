@@ -281,12 +281,9 @@ async def send_public_message(
         raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
 
 @router.get("/recommendations/{alumno_id}")
-async def get_personal_recommendations(
-    alumno_id: int,
-    db: Session = Depends(database.get_db)
-):
+async def get_recommendations_only(alumno_id: int, db: Session = Depends(database.get_db)):
     """
-    Obtiene solo las recomendaciones de Yae Miko para un alumno (sin historial, sin autenticación)
+    Obtiene solo las recomendaciones de Miko para un alumno (sin historial, sin autenticación)
     """
     try:
         logger.info(f"Obteniendo recomendaciones para alumno_id: {alumno_id}")

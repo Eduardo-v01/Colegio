@@ -43,6 +43,7 @@ class ProfesorEstadisticas(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    nombre: str
 
 class TokenData(BaseModel):
     dni: Optional[str] = None

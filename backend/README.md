@@ -196,7 +196,7 @@ backend/
 │   ├── test_profesores.py             # Pruebas completas de endpoints de profesores
 │   ├── test_public_chat.py            # Pruebas de chat público
 │   ├── test_welcome_endpoint.py       # Pruebas del endpoint de bienvenida
-│   ├── test_yae_miko_personality.py   # Pruebas de personalidad de Yae Miko
+│   ├── test_miko_personality.py        # Pruebas de personalidad de Miko
 │   ├── verificar_competencias.py      # Verificación de competencias
 │   ├── verificar_conversaciones.py    # Verificación de conversaciones
 │   ├── verificar_hojas_excel.py       # Verificación de estructura de Excel
@@ -263,9 +263,9 @@ backend/
 - `PUT /ci/{id}` - Actualizar CI
 - `DELETE /ci/{id}` - Eliminar CI
 
-### 🤖 Asistente IA (Yae Miko)
+### 🤖 Asistente IA - Miko
 - `POST /ai-assistant/recommendations` - Generar recomendaciones para un alumno
-- `POST /ai-assistant/chat` - Chat público con Yae Miko
+- `POST /ai-assistant/chat` - Chat público con Miko
 - `POST /personal-chat/` - Chat personal con historial (requiere autenticación)
 - `GET /personal-chat/history/{alumno_id}` - Obtener historial de chat personal (requiere autenticación)
 - `GET /personal-chat/recommendations/{alumno_id}` - Obtener recomendaciones sin historial
@@ -400,13 +400,14 @@ backend/
 - **Estadísticas**: Análisis estadístico de los valores de CI
 - **Visualización**: Gráficos y reportes de distribución de CI
 
-### 🤖 Asistente IA - Yae Miko
-- **Personalidad única**: Asistente con personalidad cálida y motivadora
+### 🤖 Asistente IA - Miko
+- **Personalidad única**: Asistente con personalidad cálida y motivadora para el colegio San Martín de Porres
 - **Chat público**: Conversaciones generales con el asistente
 - **Chat personal**: Conversaciones privadas con historial por alumno
 - **Recomendaciones automáticas**: Sugerencias pedagógicas personalizadas
 - **Contexto inteligente**: Memoria de conversaciones anteriores
 - **Emojis y expresiones**: Comunicación amigable y cercana
+- **Creador**: Desarrollado por Cherving (seudónimo)
 
 ### 📊 Sistema de Clustering Inteligente
 - **Procesamiento automático**: Análisis de clustering con algoritmos ML
@@ -498,7 +499,7 @@ backend/
 - Recomendaciones automáticas
 
 #### Pestaña AI Assistant
-- Chat interactivo con Yae Miko
+- Chat interactivo con Miko
 - Selección de alumnos para análisis
 - Generación de recomendaciones
 - Historial de conversaciones
@@ -520,7 +521,7 @@ backend/
 - **scikit-learn**: Machine Learning para clustering (K-Means, DBSCAN)
 - **NumPy**: Computación numérica para análisis de datos
 - **Pandas**: Manipulación y análisis de datos
-- **OpenAI**: API para asistente IA (Yae Miko)
+- **OpenAI**: API para asistente IA (Miko)
 - **Python-Jose**: Autenticación JWT
 - **Passlib**: Hashing de contraseñas
 - **OpenPyXL**: Procesamiento de archivos Excel
@@ -562,7 +563,7 @@ backend/
 - `test_personal_chat.py` - Pruebas de chat personal
 - `test_public_chat.py` - Pruebas de chat público
 - `test_welcome_endpoint.py` - Pruebas del endpoint de bienvenida
-- `test_yae_miko_personality.py` - Pruebas de personalidad de Yae Miko
+- `test_miko_personality.py` - Pruebas de personalidad de Miko
 
 ### 📋 Cómo Usar los Scripts
 
@@ -686,8 +687,8 @@ python scripts/test_profesores.py
 # 4. Probar chat
 python scripts/test_chat_functionality.py
 
-# 5. Probar personalidad de Yae Miko
-python scripts/test_yae_miko_personality.py
+# 5. Probar personalidad de Miko
+python scripts/test_miko_personality.py
 ```
 
 ### 📝 Interpretación de Resultados
@@ -737,7 +738,7 @@ Si faltan dependencias:
 - [x] Sistema completo de autenticación y autorización
 - [x] CRUD completo para todas las entidades (alumnos, cursos, competencias, profesores)
 - [x] Sistema de clustering inteligente con K-Means y DBSCAN
-- [x] Asistente IA con personalidad de Yae Miko
+- [x] Asistente IA con personalidad de Miko
 - [x] Chat personal y público con historial
 - [x] Carga y procesamiento de archivos Excel
 - [x] Gestión de inteligencias múltiples y CI
@@ -982,7 +983,7 @@ python scripts/migrate_conversations.py
 
 ### 🤖 Problemas del Asistente IA
 
-#### **Yae Miko No Responde**
+#### **Miko No Responde**
 - Verificar conexión a internet
 - Verificar configuración de OpenAI
 - Verificar que el prompt esté bien formateado

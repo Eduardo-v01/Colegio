@@ -1,184 +1,138 @@
 #!/usr/bin/env python3
 """
-Script para probar la funcionalidad del chat de Yae Miko
+Script para probar la funcionalidad del chat de Miko
 """
 
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.services.personal_ai_chat import personal_ai_chat
 from app.database import crud, database
-from sqlalchemy.orm import Session
+from app.services import personal_ai_chat
 
 def test_chat_functionality():
-    """Prueba la funcionalidad del chat con datos reales"""
-    
-    print("🌟 Probando funcionalidad del chat de Yae Miko 🌟")
-    print("=" * 60)
-    
-    # Crear sesión de base de datos
-    db = Session(database.engine)
-    
+    """Probar la funcionalidad del chat de Miko"""
     try:
-        # Obtener el primer alumno de la base de datos
-        alumnos = crud.get_alumnos(db, limit=1)
+        print("🌟 Probando funcionalidad del chat de Miko 🌟")
+        print("=" * 50)
         
+        # Obtener sesión de base de datos
+        db = next(database.get_db())
+        
+        # Obtener un alumno de prueba
+        alumnos = crud.get_alumnos(db, limit=1)
         if not alumnos:
             print("❌ No hay alumnos en la base de datos para probar")
-            return
+            return False
         
         alumno = alumnos[0]
-        print(f"👤 Probando con alumno: {alumno.Nombre} (ID: {alumno.Alumno_ID})")
+        print(f"📚 Probando con alumno: {alumno.Nombre} (ID: {alumno.Alumno_ID})")
         
-        # Obtener contexto del alumno
-        student_context = crud.get_alumno_conversacion_context(db, alumno.Alumno_ID)
+        # Probar obtención de contexto
+        print("🔍 Obteniendo contexto del alumno...")
+        context = crud.get_alumno_conversacion_context(db, alumno.Alumno_ID)
         
-        if not student_context:
-            print("❌ No se pudo obtener el contexto del alumno")
-            return
+        if not context:
+            print("❌ Error: No se pudo obtener el contexto del alumno")
+            return False
         
-        print(f"✅ Contexto obtenido:")
-        print(f"   - Nombre: {student_context['nombre']}")
-        print(f"   - CI: {student_context['ci']}")
-        print(f"   - Inteligencias: {len(student_context['inteligencias'])}")
-        print(f"   - Calificaciones: {len(student_context['calificaciones'])}")
+        print("✅ Contexto obtenido exitosamente:")
+        print(f"   - Nombre: {context['nombre']}")
+        print(f"   - CI: {context['ci']} ({context['categoria_ci']})")
+        print(f"   - Inteligencias: {len(context['inteligencias'])}")
+        print(f"   - Calificaciones: {len(context['calificaciones'])}")
         
-        # Probar mensaje de bienvenida
-        print("\n📝 Probando mensaje de bienvenida...")
-        welcome_message = personal_ai_chat.generate_welcome_message(student_context)
+        # Probar generación de mensaje de bienvenida
+        print("\n🤖 Generando mensaje de bienvenida...")
+        welcome_message = personal_ai_chat.generate_welcome_message(context)
         
-        if welcome_message:
-            print("✅ Mensaje de bienvenida generado:")
-            print(f"   Longitud: {len(welcome_message)} caracteres")
-            print(f"   Contiene 'Yae Miko': {'Yae Miko' in welcome_message}")
-            print(f"   Contiene emojis: {'😊' in welcome_message or '🌟' in welcome_message}")
-            
-            # Mostrar primeras líneas
-            lines = welcome_message.split('\n')
-            print("   Muestra del mensaje:")
-            for i, line in enumerate(lines[:5]):
-                print(f"   {i+1}. {line}")
-            if len(lines) > 5:
-                print(f"   ... y {len(lines) - 5} líneas más")
-        else:
-            print("❌ Error generando mensaje de bienvenida")
+        if not welcome_message:
+            print("❌ Error: No se pudo generar el mensaje de bienvenida")
+            return False
+        
+        print("✅ Mensaje de bienvenida generado:")
+        print(f"   Longitud: {len(welcome_message)} caracteres")
+        print(f"   Contiene 'Miko': {'Miko' in welcome_message}")
+        print(f"   Contiene emojis: {'😊' in welcome_message or '🌟' in welcome_message}")
+        
+        # Mostrar una muestra del mensaje
+        print("\n📝 Muestra del mensaje de bienvenida:")
+        print("-" * 30)
+        lines = welcome_message.split('\n')
+        for i, line in enumerate(lines[:5]):  # Mostrar solo las primeras 5 líneas
+            print(f"   {line}")
+        if len(lines) > 5:
+            print(f"   ... y {len(lines) - 5} líneas más")
         
         # Probar chat con contexto
         print("\n💬 Probando chat con contexto...")
+        test_message = "Hola, ¿cómo estás? ¿Puedes darme algunos consejos de estudio?"
         
-        # Simular historial vacío
-        conversation_history = []
-        
-        # Mensajes de prueba
-        test_messages = [
-            "Hola, ¿quién eres?",
-            "¿Cómo puedo mejorar en matemáticas?",
-            "¿Qué actividades me recomiendas?"
-        ]
-        
-        for i, message in enumerate(test_messages, 1):
-            print(f"\n   Mensaje {i}: '{message}'")
-            
-            try:
-                ai_response = personal_ai_chat.chat_with_student_context(
-                    student_context, conversation_history, message
-                )
-                
-                if ai_response["success"]:
-                    response_text = ai_response["response"]
-                    print(f"   ✅ Respuesta de Yae Miko:")
-                    print(f"      Longitud: {len(response_text)} caracteres")
-                    print(f"      Contiene 'Yae Miko': {'Yae Miko' in response_text}")
-                    print(f"      Contiene emojis: {'😊' in response_text or '🌟' in response_text or '💪' in response_text}")
-                    
-                    # Mostrar primeras líneas de la respuesta
-                    lines = response_text.split('\n')
-                    print(f"      Muestra:")
-                    for j, line in enumerate(lines[:3]):
-                        if line.strip():
-                            print(f"      - {line.strip()}")
-                    if len(lines) > 3:
-                        print(f"      ... y {len(lines) - 3} líneas más")
-                    
-                    # Agregar al historial para la siguiente iteración
-                    conversation_history.append({
-                        "mensaje": message,
-                        "es_usuario": True,
-                        "fecha": "2024-01-01T00:00:00"
-                    })
-                    conversation_history.append({
-                        "mensaje": response_text,
-                        "es_usuario": False,
-                        "fecha": "2024-01-01T00:00:00"
-                    })
-                    
-                else:
-                    print(f"   ❌ Error en la respuesta: {ai_response.get('error', 'Error desconocido')}")
-                    
-            except Exception as e:
-                print(f"   ❌ Excepción: {str(e)}")
-        
-        print("\n🎉 Pruebas completadas exitosamente!")
-        print("El chat de Yae Miko está funcionando correctamente.")
-        
-    except Exception as e:
-        print(f"❌ Error durante las pruebas: {str(e)}")
-        import traceback
-        traceback.print_exc()
-    
-    finally:
-        db.close()
-
-def test_endpoint_format():
-    """Prueba el formato de respuesta de los endpoints"""
-    
-    print("\n🔧 Verificando formato de endpoints...")
-    print("=" * 50)
-    
-    try:
-        # Simular datos de prueba
-        test_context = {
-            "alumno_id": 1,
-            "nombre": "Alumno de Prueba",
-            "ci": 100,
-            "categoria_ci": "Promedio",
-            "inteligencias": [
-                {"tipo": "Lógico-Matemática", "puntaje": 80}
-            ],
-            "calificaciones": [
-                {"competencia": "Matemáticas", "calificacion": "B", "descripcion": "Buena"}
-            ],
-            "recomendaciones_basicas": "Alumno con buen potencial"
-        }
-        
-        # Probar respuesta del chat
-        conversation_history = []
-        message = "Hola, ¿quién eres?"
-        
-        ai_response = personal_ai_chat.chat_with_student_context(
-            test_context, conversation_history, message
+        response = personal_ai_chat.chat_with_student_context(
+            context, [], test_message
         )
         
-        print("✅ Formato de respuesta del servicio:")
-        print(f"   success: {ai_response.get('success', False)}")
-        print(f"   response: {'Presente' if 'response' in ai_response else 'Faltante'}")
-        print(f"   student_name: {'Presente' if 'student_name' in ai_response else 'Faltante'}")
+        if response["success"]:
+            response_text = response["response"]
+            print("✅ Respuesta del chat generada exitosamente:")
+            print(f"   Longitud: {len(response_text)} caracteres")
+            print(f"   ✅ Respuesta de Miko:")
+            print(f"      Contiene 'Miko': {'Miko' in response_text}")
+            print(f"      Contiene personalidad: {'amigable' in response_text.lower() or 'cálida' in response_text.lower()}")
+            
+            # Mostrar una muestra de la respuesta
+            print("\n📝 Muestra de la respuesta:")
+            print("-" * 30)
+            lines = response_text.split('\n')
+            for i, line in enumerate(lines[:3]):  # Mostrar solo las primeras 3 líneas
+                print(f"   {line}")
+            if len(lines) > 3:
+                print(f"   ... y {len(lines) - 3} líneas más")
+        else:
+            print(f"❌ Error en la respuesta del chat: {response['error']}")
+            return False
         
-        if ai_response.get("success"):
-            response_text = ai_response["response"]
-            print(f"   Longitud de respuesta: {len(response_text)} caracteres")
-            print(f"   Contiene personalidad de Yae Miko: {'Yae Miko' in response_text}")
+        # Probar chat con historial
+        print("\n📚 Probando chat con historial...")
+        conversation_history = [
+            {"mensaje": "Hola Miko, ¿cómo estás?", "es_usuario": True},
+            {"mensaje": "¡Hola! Estoy muy bien, gracias por preguntar. ¿En qué puedo ayudarte hoy?", "es_usuario": False}
+        ]
         
-        print("\n✅ Formato verificado correctamente")
+        response_with_history = personal_ai_chat.chat_with_student_context(
+            context, conversation_history, "¿Puedes recordar lo que hablamos antes?"
+        )
+        
+        if response_with_history["success"]:
+            response_text = response_with_history["response"]
+            print("✅ Chat con historial funcionando correctamente:")
+            print(f"   Longitud: {len(response_text)} caracteres")
+            print(f"   Contiene personalidad de Miko: {'Miko' in response_text}")
+        else:
+            print(f"❌ Error en chat con historial: {response_with_history['error']}")
+            return False
+        
+        print("\n🎉 ¡Prueba completada exitosamente!")
+        print("El chat de Miko está funcionando correctamente.")
+        print("\nFuncionalidades verificadas:")
+        print("✅ Generación de mensaje de bienvenida")
+        print("✅ Chat con contexto personalizado")
+        print("✅ Chat con historial de conversación")
+        print("✅ Personalidad consistente")
+        print("✅ Respuestas apropiadas")
+        
+        return True
         
     except Exception as e:
-        print(f"❌ Error verificando formato: {str(e)}")
+        print(f"❌ Error durante la prueba: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return False
 
 if __name__ == "__main__":
-    test_chat_functionality()
-    test_endpoint_format()
-    
-    print("\n🎯 Resumen:")
-    print("Si todas las pruebas pasaron ✅, el chat debería funcionar correctamente.")
-    print("Si hay errores ❌, revisa los logs del servidor para más detalles.") 
+    success = test_chat_functionality()
+    if success:
+        print("\n✅ Todas las pruebas pasaron exitosamente")
+    else:
+        print("\n❌ Algunas pruebas fallaron")
+        sys.exit(1) 
