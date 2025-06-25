@@ -41,7 +41,10 @@ def register_profesor(profesor: profesor_schema.ProfesorCreate, db: Session = De
     return crud.create_profesor(db=db, profesor=profesor)
 
 @router.post("/login", response_model=profesor_schema.Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+async def login_for_access_token(
+    form_data: OAuth2PasswordRequestForm = Depends(), 
+    db: Session = Depends(database.get_db)
+):
     profesor = crud.get_profesor_by_dni_or_name(db, identifier=form_data.username)
     if not profesor or not auth.verify_password(form_data.password, profesor.Contrasena_Hash.decode('utf-8')):
         raise HTTPException(
@@ -49,11 +52,17 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             detail="DNI/Nombre o contraseña incorrectos",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
         data={"sub": profesor.DNI}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "nombre": profesor.Nombre  # 👈
+    }
 
 @router.get("/me", response_model=profesor_schema.Profesor)
 async def read_profesor_me(current_profesor = Depends(get_current_profesor)):

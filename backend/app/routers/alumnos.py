@@ -97,3 +97,8 @@ def delete_alumno(alumno_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Alumno no encontrado")
     crud.delete_alumno(db=db, alumno_id=alumno_id)
     return {"message": "Alumno eliminado exitosamente"}
+
+@router.get("/alumnos/nombres/")
+def get_alumnos_nombres(db: Session = Depends(get_db)):
+    alumnos = db.query(models.Alumno.Alumno_ID, models.Alumno.Nombre).all()
+    return [{"Alumno_ID": a.Alumno_ID, "Nombre": a.Nombre} for a in alumnos]
