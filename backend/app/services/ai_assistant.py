@@ -10,10 +10,10 @@ class AIAssistantService:
     def __init__(self):
         # Configuración de la IA - usando DeepSeek a través de OpenRouter
         self.client = OpenAI(
-            api_key="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",
+            api_key="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",
             base_url="https://openrouter.ai/api/v1"
         )
-        self.model = "deepseek/deepseek-r1:free"
+        self.model = "deepseek/deepseek-chat-v3-0324:free"
         # Almacenar conversaciones por alumno
         self.conversations = {}
     
